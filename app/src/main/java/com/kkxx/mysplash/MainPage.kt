@@ -1,33 +1,52 @@
 package com.kkxx.mysplash
 
-import android.arch.lifecycle.LiveData
 import android.arch.lifecycle.Observer
 import android.arch.lifecycle.ViewModelProviders
+import android.content.Context
 import android.os.Bundle
 import android.support.design.widget.Snackbar
 import android.support.design.widget.NavigationView
 import android.support.v4.view.GravityCompat
 import android.support.v7.app.ActionBarDrawerToggle
 import android.support.v7.app.AppCompatActivity
+import android.support.v7.widget.LinearLayoutManager
+import android.support.v7.widget.RecyclerView
 import android.view.Menu
 import android.view.MenuItem
+import com.kkxx.mysplash.adapter.SplashAdapter
 import com.kkxx.mysplash.model.SplashInfo
 import com.kkxx.mysplash.model.SplashViewModel
+import com.kkxx.mysplash.repository.unsplash.UnSplashWebService
 import kotlinx.android.synthetic.main.activity_main_page.*
 import kotlinx.android.synthetic.main.app_bar_main_page.*
 
 class MainPage : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener {
 
     private lateinit var viewModel: SplashViewModel
+    private var splashAdapter: SplashAdapter? = null
+    private lateinit var splashView: RecyclerView
+    private lateinit var context: Context
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main_page)
+        context = this
         initView()
         viewModel = ViewModelProviders.of(this).get(SplashViewModel::class.java)
-        viewModel.getSplashs().observe(this, Observer {
 
-        })
+    }
+
+    override fun onResume() {
+        super.onResume()
+        viewModel.getSplashList()!!.observe(this@MainPage,
+                Observer<List<SplashInfo>> { t: List<SplashInfo>? ->
+                    if (splashAdapter == null) {
+                        splashAdapter = SplashAdapter(t!!, context)
+                        splashView.adapter = splashAdapter
+                    } else {
+                        splashAdapter!!.setSplashInfos(t!!)
+                    }
+                })
     }
 
     private fun initView() {
@@ -37,11 +56,12 @@ class MainPage : AppCompatActivity(), NavigationView.OnNavigationItemSelectedLis
                     .setAction("Action", null).show()
         }
         val toggle = ActionBarDrawerToggle(
-                this, drawer_layout, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close)
+                this@MainPage, drawer_layout, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close)
         drawer_layout.addDrawerListener(toggle)
         toggle.syncState()
-
-        nav_view.setNavigationItemSelectedListener(this)
+        nav_view.setNavigationItemSelectedListener(this@MainPage)
+        splashView = findViewById(R.id.splashRecyclerView)
+        splashView.layoutManager = LinearLayoutManager(this@MainPage)
     }
 
 

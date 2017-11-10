@@ -2,6 +2,8 @@ package com.kkxx.mysplash.model
 
 import android.arch.lifecycle.LiveData
 import android.arch.lifecycle.ViewModel
+import com.kkxx.mysplash.SplashApplication
+import com.kkxx.mysplash.repository.unsplash.UnSplashWebService
 
 /**
  * @author chenwei
@@ -9,9 +11,23 @@ import android.arch.lifecycle.ViewModel
  */
 class SplashViewModel : ViewModel() {
 
-    private lateinit var splashLiveData: LiveData<List<SplashInfo>>
+    private var splashLiveData: LiveData<List<SplashInfo>>? = null
+    private var webService: UnSplashWebService? = null
 
-    fun getSplashs(): LiveData<List<SplashInfo>> {
-        return splashLiveData
+    fun initData() {
+        if (webService == null) {
+            webService = UnSplashWebService.getService()
+        }
+        if (this.splashLiveData != null) {
+            return
+        }
+        this.splashLiveData = webService!!.requestPhotoes(0, 15, SplashApplication.ORDER_BY_LATEST)
+    }
+
+    fun getSplashList(): LiveData<List<SplashInfo>>? {
+        if (splashLiveData == null) {
+            initData()
+        }
+        return splashLiveData!!
     }
 }

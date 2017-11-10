@@ -25,7 +25,7 @@ class SplashAdapter(splashList: List<SplashInfo>, context: Context) : RecyclerVi
     }
 
     override fun onBindViewHolder(holder: SplashHolder, position: Int) {
-        var splash = splashInfoes[position]
+        val splash = splashInfoes[position]
         holder.splashDate.text = splash.date
         holder.splashAuthor.text = splash.author
         Glide.with(context).load(splash.preUrl).into(holder.splashPreImage)
@@ -48,5 +48,10 @@ class SplashAdapter(splashList: List<SplashInfo>, context: Context) : RecyclerVi
         var splashAuthor: TextView = itemView.findViewById(R.id.splashAuthor)
         var splashDate: TextView = itemView.findViewById(R.id.splashDate)
         var splashAddress: TextView = itemView.findViewById(R.id.splashAddress)
+    }
+
+    fun setSplashInfos(splashList: List<SplashInfo>) {
+        this.splashInfoes = splashList
+        notifyDataSetChanged()
     }
 }
