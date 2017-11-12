@@ -3,6 +3,7 @@ package com.kkxx.mysplash.model
 import android.arch.lifecycle.LiveData
 import android.arch.lifecycle.ViewModel
 import com.kkxx.mysplash.SplashApplication
+import com.kkxx.mysplash.model.unsplash.photo.SplashPhoto
 import com.kkxx.mysplash.repository.unsplash.UnSplashWebService
 
 /**
@@ -11,7 +12,7 @@ import com.kkxx.mysplash.repository.unsplash.UnSplashWebService
  */
 class SplashViewModel : ViewModel() {
 
-    private var splashLiveData: LiveData<List<SplashInfo>>? = null
+    private var splashLiveData: LiveData<List<SplashPhoto>>? = null
     private var webService: UnSplashWebService? = null
 
     fun initData() {
@@ -21,10 +22,11 @@ class SplashViewModel : ViewModel() {
         if (this.splashLiveData != null) {
             return
         }
-        this.splashLiveData = webService!!.requestPhotoes(0, 15, SplashApplication.ORDER_BY_LATEST)
+        this.splashLiveData = webService!!.requestPhotoes(0, 50, SplashApplication
+                .ORDER_BY_LATEST)
     }
 
-    fun getSplashList(): LiveData<List<SplashInfo>>? {
+    fun getSplashList(): LiveData<List<SplashPhoto>>? {
         if (splashLiveData == null) {
             initData()
         }

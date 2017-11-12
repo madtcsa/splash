@@ -4,7 +4,7 @@ import android.arch.lifecycle.LiveData
 import android.arch.lifecycle.MutableLiveData
 import com.google.gson.GsonBuilder
 import com.kkxx.mysplash.SplashApplication
-import com.kkxx.mysplash.model.SplashInfo
+import com.kkxx.mysplash.model.unsplash.photo.SplashPhoto
 import com.kkxx.mysplash.service.unsplash.SplashAuthInterceptor
 import com.kkxx.mysplash.service.unsplash.SplashPhotoApi
 import okhttp3.OkHttpClient
@@ -39,16 +39,16 @@ class UnSplashWebService {
                 .create(SplashPhotoApi::class.java)
     }
 
-    fun requestPhotoes(page: Int, perPage: Int, orderBy: String): LiveData<List<SplashInfo>> {
+    fun requestPhotoes(page: Int, perPage: Int, orderBy: String): LiveData<List<SplashPhoto>> {
         val getPhotos = buildApi(buildClient()).getPhotos(page, perPage, orderBy)
-        val data: MutableLiveData<List<SplashInfo>> = MutableLiveData()
-        getPhotos.enqueue(object : Callback<List<SplashInfo>> {
-            override fun onResponse(call: Call<List<SplashInfo>>, response: retrofit2
-            .Response<List<SplashInfo>>) {
+        val data: MutableLiveData<List<SplashPhoto>> = MutableLiveData()
+        getPhotos.enqueue(object : Callback<List<SplashPhoto>> {
+            override fun onResponse(call: Call<List<SplashPhoto>>, response: retrofit2
+            .Response<List<SplashPhoto>>) {
                 data.value = response.body()
             }
 
-            override fun onFailure(call: Call<List<SplashInfo>>, t: Throwable) {
+            override fun onFailure(call: Call<List<SplashPhoto>>, t: Throwable) {
 
             }
         })

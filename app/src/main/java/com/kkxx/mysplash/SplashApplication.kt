@@ -24,7 +24,7 @@ object SplashApplication : Application() {
     val DOWNLOAD_COLLECTION_FORMAT = ".zip"
 
     /**
-     * Unsplash Category
+     * Unsplash PhotoCategory
      */
     val CATEGORY_TOTAL_NEW = 0
     val CATEGORY_TOTAL_FEATURED = 1

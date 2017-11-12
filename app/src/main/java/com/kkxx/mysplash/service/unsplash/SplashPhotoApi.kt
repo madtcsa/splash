@@ -1,12 +1,12 @@
 package com.kkxx.mysplash.service.unsplash
 
-import com.kkxx.mysplash.model.SplashInfo
+import com.kkxx.mysplash.model.unsplash.photo.SplashPhoto
 import retrofit2.Call
 import retrofit2.http.GET
 import retrofit2.http.Query
 
 /**
- * Splash Photo Api
+ * Splash SplashPhoto Api
  * @author chenwei
  * 2017/11/5
  */
@@ -24,7 +24,7 @@ interface SplashPhotoApi {
     @GET("photos")
     fun getPhotos(@Query("page") page: Int,
                   @Query("per_page") per_page: Int,
-                  @Query("order_by") order_by: String): Call<List<SplashInfo>>
+                  @Query("order_by") order_by: String): Call<List<SplashPhoto>>
 
     @GET("photos/random")
     fun getRandomPhotos(@Query("tag") categoryId: Int?,
@@ -32,5 +32,5 @@ interface SplashPhotoApi {
                         @Query("username") username: String,
                         @Query("query") query: String,
                         @Query("orientation") orientation: String,
-                        @Query("count") count: Int): Call<List<SplashInfo>>
+                        @Query("count") count: Int): Call<List<SplashPhoto>>
 }

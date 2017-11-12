@@ -9,14 +9,16 @@ import android.support.design.widget.NavigationView
 import android.support.v4.view.GravityCompat
 import android.support.v7.app.ActionBarDrawerToggle
 import android.support.v7.app.AppCompatActivity
+import android.support.v7.widget.GridLayoutManager
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
+import android.support.v7.widget.StaggeredGridLayoutManager
 import android.view.Menu
 import android.view.MenuItem
+import com.bumptech.glide.Glide
 import com.kkxx.mysplash.adapter.SplashAdapter
-import com.kkxx.mysplash.model.SplashInfo
 import com.kkxx.mysplash.model.SplashViewModel
-import com.kkxx.mysplash.repository.unsplash.UnSplashWebService
+import com.kkxx.mysplash.model.unsplash.photo.SplashPhoto
 import kotlinx.android.synthetic.main.activity_main_page.*
 import kotlinx.android.synthetic.main.app_bar_main_page.*
 
@@ -39,7 +41,7 @@ class MainPage : AppCompatActivity(), NavigationView.OnNavigationItemSelectedLis
     override fun onResume() {
         super.onResume()
         viewModel.getSplashList()!!.observe(this@MainPage,
-                Observer<List<SplashInfo>> { t: List<SplashInfo>? ->
+                Observer<List<SplashPhoto>> { t: List<SplashPhoto>? ->
                     if (splashAdapter == null) {
                         splashAdapter = SplashAdapter(t!!, context)
                         splashView.adapter = splashAdapter
@@ -47,6 +49,17 @@ class MainPage : AppCompatActivity(), NavigationView.OnNavigationItemSelectedLis
                         splashAdapter!!.setSplashInfos(t!!)
                     }
                 })
+
+        splashView.addOnScrollListener(object : RecyclerView.OnScrollListener() {
+
+            override fun onScrollStateChanged(recyclerView: RecyclerView?, newState: Int) {
+                super.onScrollStateChanged(recyclerView, newState)
+                when (newState) {
+                    RecyclerView.SCROLL_STATE_IDLE -> Glide.with(this@MainPage).resumeRequests()
+                    else -> Glide.with(this@MainPage).pauseRequests()
+                }
+            }
+        })
     }
 
     private fun initView() {
@@ -61,7 +74,8 @@ class MainPage : AppCompatActivity(), NavigationView.OnNavigationItemSelectedLis
         toggle.syncState()
         nav_view.setNavigationItemSelectedListener(this@MainPage)
         splashView = findViewById(R.id.splashRecyclerView)
-        splashView.layoutManager = LinearLayoutManager(this@MainPage)
+        splashView.layoutManager = StaggeredGridLayoutManager(1, StaggeredGridLayoutManager
+                .VERTICAL)
     }
 
 

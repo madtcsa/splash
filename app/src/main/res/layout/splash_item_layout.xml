@@ -1,48 +1,49 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
+<android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="wrap_content"
+    android:id="@+id/cardview"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
-    <ImageView
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+    <com.kkxx.mysplash.view.FreedomImageView
         android:id="@+id/splashPreviewImg"
         android:layout_width="match_parent"
+        android:scaleType="centerCrop"
+        app:fiv_shadow_position="bottom"
         android:layout_height="wrap_content" />
 
     <TextView
         android:id="@+id/splashDate"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_alignBottom="@id/splashPreviewImg"
         android:layout_marginBottom="8dp"
-        android:layout_marginStart="16dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
+        android:layout_marginStart="8dp"
+        android:textColor="@android:color/white"
         tools:text="#20170101" />
 
     <TextView
         android:id="@+id/splashAuthor"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_above="@id/splashDate"
         android:layout_marginBottom="8dp"
-        android:layout_marginStart="16dp"
-        app:layout_constraintBottom_toTopOf="@+id/splashDate"
-        app:layout_constraintStart_toStartOf="parent"
+        android:layout_marginStart="8dp"
+        android:textColor="@android:color/white"
         tools:text="unsplash" />
 
     <ImageView
         android:id="@+id/splashCollect"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        app:srcCompat="@android:drawable/star_big_on"
-        tools:layout_editor_absoluteX="335dp"
-        tools:layout_editor_absoluteY="471dp" />
-
-    <TextView
-        android:id="@+id/splashAddress"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        tools:text="address"
-        tools:layout_editor_absoluteX="16dp"
-        tools:layout_editor_absoluteY="427dp" />
-</android.support.constraint.ConstraintLayout>
+        android:layout_alignBottom="@id/splashPreviewImg"
+        android:layout_alignEnd="@id/splashPreviewImg"
+        android:layout_marginEnd="8dp"
+        android:src="@android:drawable/ic_menu_camera" />
+    </RelativeLayout>
+</android.support.v7.widget.CardView>
