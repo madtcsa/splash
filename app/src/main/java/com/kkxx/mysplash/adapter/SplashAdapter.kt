@@ -35,7 +35,7 @@ class SplashAdapter(splashList: List<SplashPhoto>, context: Context) : RecyclerV
         holder.splashAuthor.text = splashPhoto.user.name
         holder.splashPreImage.setSize(splashPhoto.width, splashPhoto.height)
         holder.splashPreImage.setShowShadow(false)
-        Glide.with(context).load(splashPhoto.urls.small).into(holder.splashPreImage)
+        Glide.with(context).load(splashPhoto.urls.regular).into(holder.splashPreImage)
         if (splashPhoto.liked_by_user) {
             holder.splashCollect.setBackgroundResource(android.R.drawable.star_big_on)
         } else {
