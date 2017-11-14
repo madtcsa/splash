@@ -7,10 +7,11 @@ import android.content.Context
  * @author chenwei
  * 2017/11/5
  */
-object SplashApplication : Application() {
+class SplashApplication : Application() {
 
 
     private var instance: SplashApplication = this@SplashApplication
+    companion object {
     /**
      * Unsplash API
      */
@@ -45,13 +46,13 @@ object SplashApplication : Application() {
     val unsplash_application_id = "42ca73ce1b06000aefbc36aa95c204a8b75685d97249878139c0e3114bb2b702"
     val unsplash_secret = "a1c3d30d21227b0dd416303566feb770a98912ac0ecb4d9c353c27f64048f6a3"
 
+        fun getSplashAppId(auth: Boolean): String {
+            return unsplash_application_id
+        }
+    }
     override fun onCreate() {
         super.onCreate()
         instance = this
-    }
-
-    fun getSplashAppId(auth: Boolean): String {
-        return unsplash_application_id
     }
 
     fun getInstance(): SplashApplication {

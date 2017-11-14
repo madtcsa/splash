@@ -3,6 +3,7 @@ package com.kkxx.mysplash.adapter
 import android.content.Context
 import android.support.v7.widget.CardView
 import android.support.v7.widget.RecyclerView
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -13,6 +14,7 @@ import com.kkxx.mysplash.R
 import com.kkxx.mysplash.model.unsplash.photo.SplashPhoto
 import com.kkxx.mysplash.utils.ImageHelper
 import com.kkxx.mysplash.view.FreedomImageView
+import java.util.*
 
 /**
  * @author chenwei
@@ -58,6 +60,14 @@ class SplashAdapter(splashList: List<SplashPhoto>, context: Context) : RecyclerV
 
     fun setSplashInfos(splashList: List<SplashPhoto>) {
         this.splashInfoes = splashList
+        notifyDataSetChanged()
+    }
+
+    fun appendSplashInfos(splashList: List<SplashPhoto>) {
+        if(this.splashInfoes is ArrayList) {
+            (this.splashInfoes as ArrayList<SplashPhoto>).addAll(splashList)
+        }
+        Log.d("SplashAdapter","-----size----- "+this.splashInfoes.size)
         notifyDataSetChanged()
     }
 }

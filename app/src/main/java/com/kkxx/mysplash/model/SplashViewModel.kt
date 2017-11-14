@@ -15,21 +15,16 @@ class SplashViewModel : ViewModel() {
     private var splashLiveData: LiveData<List<SplashPhoto>>? = null
     private var webService: UnSplashWebService? = null
 
-    fun initData() {
+    fun loadData(pageIndex: Int) {
         if (webService == null) {
             webService = UnSplashWebService.getService()
         }
-        if (this.splashLiveData != null) {
-            return
-        }
-        this.splashLiveData = webService!!.requestPhotoes(0, 50, SplashApplication
+        this.splashLiveData = webService!!.requestPhotoes(pageIndex, 3, SplashApplication
                 .ORDER_BY_LATEST)
     }
 
-    fun getSplashList(): LiveData<List<SplashPhoto>>? {
-        if (splashLiveData == null) {
-            initData()
-        }
+    fun getSplashList(pageIndex: Int): LiveData<List<SplashPhoto>>? {
+        loadData(pageIndex)
         return splashLiveData!!
     }
 }

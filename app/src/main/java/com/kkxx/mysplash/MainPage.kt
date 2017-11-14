@@ -4,18 +4,18 @@ import android.arch.lifecycle.Observer
 import android.arch.lifecycle.ViewModelProviders
 import android.content.Context
 import android.os.Bundle
-import android.support.design.widget.Snackbar
 import android.support.design.widget.NavigationView
+import android.support.design.widget.Snackbar
 import android.support.v4.view.GravityCompat
 import android.support.v7.app.ActionBarDrawerToggle
 import android.support.v7.app.AppCompatActivity
-import android.support.v7.widget.GridLayoutManager
-import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
 import android.support.v7.widget.StaggeredGridLayoutManager
 import android.view.Menu
 import android.view.MenuItem
 import com.bumptech.glide.Glide
+import com.jcodecraeer.xrecyclerview.ProgressStyle
+import com.jcodecraeer.xrecyclerview.XRecyclerView
 import com.kkxx.mysplash.adapter.SplashAdapter
 import com.kkxx.mysplash.model.SplashViewModel
 import com.kkxx.mysplash.model.unsplash.photo.SplashPhoto
@@ -26,8 +26,9 @@ class MainPage : AppCompatActivity(), NavigationView.OnNavigationItemSelectedLis
 
     private lateinit var viewModel: SplashViewModel
     private var splashAdapter: SplashAdapter? = null
-    private lateinit var splashView: RecyclerView
+    private lateinit var splashView: XRecyclerView
     private lateinit var context: Context
+    private var pageIndex: Int = 1
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -40,16 +41,7 @@ class MainPage : AppCompatActivity(), NavigationView.OnNavigationItemSelectedLis
 
     override fun onResume() {
         super.onResume()
-        viewModel.getSplashList()!!.observe(this@MainPage,
-                Observer<List<SplashPhoto>> { t: List<SplashPhoto>? ->
-                    if (splashAdapter == null) {
-                        splashAdapter = SplashAdapter(t!!, context)
-                        splashView.adapter = splashAdapter
-                    } else {
-                        splashAdapter!!.setSplashInfos(t!!)
-                    }
-                })
-
+        loadData(false)
         splashView.addOnScrollListener(object : RecyclerView.OnScrollListener() {
 
             override fun onScrollStateChanged(recyclerView: RecyclerView?, newState: Int) {
@@ -60,6 +52,24 @@ class MainPage : AppCompatActivity(), NavigationView.OnNavigationItemSelectedLis
                 }
             }
         })
+    }
+
+    private fun loadData(isMore: Boolean) {
+        viewModel.getSplashList(pageIndex)!!.observe(this@MainPage,
+                Observer<List<SplashPhoto>> { t: List<SplashPhoto>? ->
+                    if (splashAdapter == null) {
+                        splashAdapter = SplashAdapter(t!!, context)
+                        splashView.adapter = splashAdapter
+                    } else {
+                        if (isMore) {
+                            splashAdapter!!.appendSplashInfos(t!!)
+                            splashView.loadMoreComplete()
+                        } else {
+                            splashAdapter!!.setSplashInfos(t!!)
+                            splashView.refreshComplete()
+                        }
+                    }
+                })
     }
 
     private fun initView() {
@@ -73,11 +83,28 @@ class MainPage : AppCompatActivity(), NavigationView.OnNavigationItemSelectedLis
         drawer_layout.addDrawerListener(toggle)
         toggle.syncState()
         nav_view.setNavigationItemSelectedListener(this@MainPage)
+        initSplashListView()
+    }
+
+    private fun initSplashListView() {
         splashView = findViewById(R.id.splashRecyclerView)
         splashView.layoutManager = StaggeredGridLayoutManager(1, StaggeredGridLayoutManager
                 .VERTICAL)
-    }
+        splashView.setRefreshProgressStyle(ProgressStyle.BallSpinFadeLoader)
+        splashView.setLoadingMoreProgressStyle(ProgressStyle.BallRotate)
+        splashView.setArrowImageView(R.drawable.iconfont_downgrey)
+        splashView.setLoadingListener(object : XRecyclerView.LoadingListener {
+            override fun onLoadMore() {
+                ++pageIndex
+                loadData(true)
+            }
 
+            override fun onRefresh() {
+                pageIndex = 1
+                loadData(false)
+            }
+        })
+    }
 
     override fun onBackPressed() {
         if (drawer_layout.isDrawerOpen(GravityCompat.START)) {
