@@ -9,4 +9,8 @@
 
     <dimen name="photo_info_base_view_height">300dp</dimen>
 
+    <dimen name="blue_sub_action_button_content_margin">10dp</dimen>
+    <dimen name="blue_sub_action_button_size">40dp</dimen>
+    <dimen name="fab_action_menu_radius">96dp</dimen>
+
 </resources>

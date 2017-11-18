@@ -15,6 +15,7 @@ import android.support.v7.widget.StaggeredGridLayoutManager
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
+import android.widget.FrameLayout
 import android.widget.ImageView
 import com.bumptech.glide.Glide
 import com.jcodecraeer.xrecyclerview.ProgressStyle
@@ -98,21 +99,47 @@ class MainPage : AppCompatActivity(), NavigationView.OnNavigationItemSelectedLis
         fabIV.setImageDrawable(resources.getDrawable(R.drawable.ic_action_new_light))
         fab = FloatingActionButton.Builder(this)
                 .setContentView(fabIV)
+                .setPosition(FloatingActionButton.POSITION_RIGHT_CENTER)
                 .build()
 
         val sabBuilder: SubActionButton.Builder = SubActionButton.Builder(this@MainPage)
-        val icon1 = ImageView(this@MainPage)
-        val icon2 = ImageView(this@MainPage)
-        val icon3 = ImageView(this@MainPage)
-        val icon4 = ImageView(this@MainPage)
+        sabBuilder.setBackgroundDrawable(resources.getDrawable(R.drawable.button_action_blue_selector))
+        val blueSubActionButtonSize = resources.getDimensionPixelSize(R.dimen.blue_sub_action_button_size)
+        val blueSubActionButtonContentMargin = resources.getDimensionPixelSize(R.dimen.blue_sub_action_button_content_margin)
+        val fabActionMenuRadius = resources.getDimensionPixelSize(R.dimen.fab_action_menu_radius)
+        val blueContentParams = FrameLayout.LayoutParams(FrameLayout.LayoutParams.MATCH_PARENT, FrameLayout.LayoutParams.MATCH_PARENT)
+        blueContentParams.setMargins(blueSubActionButtonContentMargin,
+                blueSubActionButtonContentMargin,
+                blueSubActionButtonContentMargin,
+                blueSubActionButtonContentMargin)
+        sabBuilder.setLayoutParams(blueContentParams)
+        val blueParams = FrameLayout.LayoutParams(blueSubActionButtonSize, blueSubActionButtonSize)
+        sabBuilder.setLayoutParams(blueParams)
 
+        val buildingsIV = ImageView(this@MainPage)
+        buildingsIV.setImageResource(R.drawable.ic_buildings)
+        val foodDrinkIV = ImageView(this@MainPage)
+        foodDrinkIV.setImageResource(R.drawable.ic_food_drink)
+        val natureIV = ImageView(this@MainPage)
+        natureIV.setImageResource(R.drawable.ic_nature)
+        val objectsIV = ImageView(this@MainPage)
+        objectsIV.setImageResource(R.drawable.ic_object)
+        val peopleIV = ImageView(this@MainPage)
+        peopleIV.setImageResource(R.drawable.ic_people)
+        val technologyIV = ImageView(this@MainPage)
+        technologyIV.setImageResource(R.drawable.ic_technology)
 
         var circleMenu = FloatingActionMenu.Builder(this@MainPage)
-                .addSubActionView(sabBuilder.setContentView(icon1).build())
-                .addSubActionView(sabBuilder.setContentView(icon2).build())
-                .addSubActionView(sabBuilder.setContentView(icon3).build())
-                .addSubActionView(sabBuilder.setContentView(icon4).build())
+                .addSubActionView(sabBuilder.setContentView(buildingsIV,blueContentParams).build())
+                .addSubActionView(sabBuilder.setContentView(foodDrinkIV,blueContentParams).build())
+                .addSubActionView(sabBuilder.setContentView(natureIV,blueContentParams).build())
+                .addSubActionView(sabBuilder.setContentView(objectsIV,blueContentParams).build())
+                .addSubActionView(sabBuilder.setContentView(peopleIV,blueContentParams).build())
+                .addSubActionView(sabBuilder.setContentView(technologyIV,blueContentParams).build())
+                .setRadius(fabActionMenuRadius)
                 .attachTo(fab)
+                .setStartAngle(90)
+                .setEndAngle(270)
                 .build()
 
         circleMenu.setStateChangeListener(object : FloatingActionMenu.MenuStateChangeListener {
