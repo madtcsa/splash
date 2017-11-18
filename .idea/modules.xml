@@ -4,6 +4,8 @@
     <modules>
       <module fileurl="file://$PROJECT_DIR$/MySplash.iml" filepath="$PROJECT_DIR$/MySplash.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
+      <module fileurl="file://$PROJECT_DIR$/circlemeunlibrary/circlemeunlibrary.iml" filepath="$PROJECT_DIR$/circlemeunlibrary/circlemeunlibrary.iml" />
+      <module fileurl="file://$PROJECT_DIR$/splash.iml" filepath="$PROJECT_DIR$/splash.iml" />
     </modules>
   </component>
 </project>

@@ -1,11 +1,12 @@
 package com.kkxx.mysplash
 
+import android.animation.ObjectAnimator
+import android.animation.PropertyValuesHolder
 import android.arch.lifecycle.Observer
 import android.arch.lifecycle.ViewModelProviders
 import android.content.Context
 import android.os.Bundle
 import android.support.design.widget.NavigationView
-import android.support.design.widget.Snackbar
 import android.support.v4.view.GravityCompat
 import android.support.v7.app.ActionBarDrawerToggle
 import android.support.v7.app.AppCompatActivity
@@ -13,14 +14,20 @@ import android.support.v7.widget.RecyclerView
 import android.support.v7.widget.StaggeredGridLayoutManager
 import android.view.Menu
 import android.view.MenuItem
+import android.view.View
+import android.widget.ImageView
 import com.bumptech.glide.Glide
 import com.jcodecraeer.xrecyclerview.ProgressStyle
 import com.jcodecraeer.xrecyclerview.XRecyclerView
 import com.kkxx.mysplash.adapter.SplashAdapter
 import com.kkxx.mysplash.model.SplashViewModel
 import com.kkxx.mysplash.model.unsplash.photo.SplashPhoto
+import com.oguzdev.circularfloatingactionmenu.library.FloatingActionButton
+import com.oguzdev.circularfloatingactionmenu.library.FloatingActionMenu
+import com.oguzdev.circularfloatingactionmenu.library.SubActionButton
 import kotlinx.android.synthetic.main.activity_main_page.*
 import kotlinx.android.synthetic.main.app_bar_main_page.*
+import kotlinx.android.synthetic.main.nav_header_main_page.view.*
 
 class MainPage : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener {
 
@@ -29,6 +36,8 @@ class MainPage : AppCompatActivity(), NavigationView.OnNavigationItemSelectedLis
     private lateinit var splashView: XRecyclerView
     private lateinit var context: Context
     private var pageIndex: Int = 1
+    private lateinit var fab: FloatingActionButton
+    private lateinit var fabIV: ImageView
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -74,16 +83,56 @@ class MainPage : AppCompatActivity(), NavigationView.OnNavigationItemSelectedLis
 
     private fun initView() {
         setSupportActionBar(toolbar)
-        fab.setOnClickListener { view ->
-            Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                    .setAction("Action", null).show()
-        }
         val toggle = ActionBarDrawerToggle(
                 this@MainPage, drawer_layout, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close)
         drawer_layout.addDrawerListener(toggle)
         toggle.syncState()
         nav_view.setNavigationItemSelectedListener(this@MainPage)
         initSplashListView()
+        initCircleMenu()
+    }
+
+    private fun initCircleMenu() {
+
+        fabIV = ImageView(this@MainPage)
+        fabIV.setImageDrawable(resources.getDrawable(R.drawable.ic_action_new_light))
+        fab = FloatingActionButton.Builder(this)
+                .setContentView(fabIV)
+                .build()
+
+        val sabBuilder: SubActionButton.Builder = SubActionButton.Builder(this@MainPage)
+        val icon1 = ImageView(this@MainPage)
+        val icon2 = ImageView(this@MainPage)
+        val icon3 = ImageView(this@MainPage)
+        val icon4 = ImageView(this@MainPage)
+
+
+        var circleMenu = FloatingActionMenu.Builder(this@MainPage)
+                .addSubActionView(sabBuilder.setContentView(icon1).build())
+                .addSubActionView(sabBuilder.setContentView(icon2).build())
+                .addSubActionView(sabBuilder.setContentView(icon3).build())
+                .addSubActionView(sabBuilder.setContentView(icon4).build())
+                .attachTo(fab)
+                .build()
+
+        circleMenu.setStateChangeListener(object : FloatingActionMenu.MenuStateChangeListener {
+            override fun onMenuOpened(menu: FloatingActionMenu) {
+                val pvhR = PropertyValuesHolder.ofFloat(View.ROTATION, 45F)
+                val animation = ObjectAnimator.ofPropertyValuesHolder(fab, pvhR)
+                animation.start()
+            }
+
+            override fun onMenuClosed(menu: FloatingActionMenu) {
+                val pvhR = PropertyValuesHolder.ofFloat(View.ROTATION, 0F)
+                val animation = ObjectAnimator.ofPropertyValuesHolder(fab, pvhR)
+                animation.start()
+            }
+        })
+
+//        fab.setOnClickListener { view ->
+//            Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
+//                    .setAction("Action", null).show()
+//        }
     }
 
     private fun initSplashListView() {
