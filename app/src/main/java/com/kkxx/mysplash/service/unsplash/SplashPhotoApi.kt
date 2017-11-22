@@ -3,6 +3,7 @@ package com.kkxx.mysplash.service.unsplash
 import com.kkxx.mysplash.model.unsplash.photo.SplashPhoto
 import retrofit2.Call
 import retrofit2.http.GET
+import retrofit2.http.Path
 import retrofit2.http.Query
 import java.util.*
 
@@ -34,4 +35,10 @@ interface SplashPhotoApi {
                         @Query("query") query: String,
                         @Query("orientation") orientation: String,
                         @Query("count") count: Int): Call<List<SplashPhoto>>
+
+
+    @GET("categories/{id}/photos")
+    abstract fun getPhotosInAGivenCategory(@Path("id") id: Int,
+                                           @Query("page") page: Int,
+                                           @Query("per_page") per_page: Int): Call<List<SplashPhoto>>
 }

@@ -1,6 +1,6 @@
 package com.kkxx.mysplash.service.unsplash
 
-import com.kkxx.mysplash.SplashApplication
+import com.kkxx.mysplash.Splash
 import okhttp3.Interceptor
 import okhttp3.Request
 import okhttp3.Response
@@ -18,7 +18,7 @@ class SplashAuthInterceptor : Interceptor {
     override fun intercept(chain: Interceptor.Chain?): Response {
         val request: Request = chain!!.request().newBuilder()
                 .addHeader("Authorization", "Client-ID " +
-                        SplashApplication.getSplashAppId(false))
+                        Splash.getSplashAppId(false))
                 .build()
         return chain.proceed(request)
     }

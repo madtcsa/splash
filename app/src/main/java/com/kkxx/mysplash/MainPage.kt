@@ -28,7 +28,6 @@ import com.oguzdev.circularfloatingactionmenu.library.FloatingActionMenu
 import com.oguzdev.circularfloatingactionmenu.library.SubActionButton
 import kotlinx.android.synthetic.main.activity_main_page.*
 import kotlinx.android.synthetic.main.app_bar_main_page.*
-import kotlinx.android.synthetic.main.nav_header_main_page.view.*
 
 class MainPage : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener {
 
@@ -39,14 +38,14 @@ class MainPage : AppCompatActivity(), NavigationView.OnNavigationItemSelectedLis
     private var pageIndex: Int = 1
     private lateinit var fab: FloatingActionButton
     private lateinit var fabIV: ImageView
-
+    private var splashCategoryId =Splash.illogicalParams
+    private lateinit var circleMenu:FloatingActionMenu
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main_page)
         context = this
         initView()
         viewModel = ViewModelProviders.of(this).get(SplashViewModel::class.java)
-
     }
 
     override fun onResume() {
@@ -65,7 +64,7 @@ class MainPage : AppCompatActivity(), NavigationView.OnNavigationItemSelectedLis
     }
 
     private fun loadData(isMore: Boolean) {
-        viewModel.getSplashList(pageIndex)!!.observe(this@MainPage,
+        viewModel.getSplashList(pageIndex, splashCategoryId)!!.observe(this@MainPage,
                 Observer<List<SplashPhoto>> { t: List<SplashPhoto>? ->
                     if (splashAdapter == null) {
                         splashAdapter = SplashAdapter(t!!, context)
@@ -129,13 +128,13 @@ class MainPage : AppCompatActivity(), NavigationView.OnNavigationItemSelectedLis
         val technologyIV = ImageView(this@MainPage)
         technologyIV.setImageResource(R.drawable.ic_technology)
 
-        var circleMenu = FloatingActionMenu.Builder(this@MainPage)
-                .addSubActionView(sabBuilder.setContentView(buildingsIV,blueContentParams).build())
-                .addSubActionView(sabBuilder.setContentView(foodDrinkIV,blueContentParams).build())
-                .addSubActionView(sabBuilder.setContentView(natureIV,blueContentParams).build())
-                .addSubActionView(sabBuilder.setContentView(objectsIV,blueContentParams).build())
-                .addSubActionView(sabBuilder.setContentView(peopleIV,blueContentParams).build())
-                .addSubActionView(sabBuilder.setContentView(technologyIV,blueContentParams).build())
+         circleMenu = FloatingActionMenu.Builder(this@MainPage)
+                .addSubActionView(sabBuilder.setContentView(buildingsIV, blueContentParams).build())
+                .addSubActionView(sabBuilder.setContentView(foodDrinkIV, blueContentParams).build())
+                .addSubActionView(sabBuilder.setContentView(natureIV, blueContentParams).build())
+                .addSubActionView(sabBuilder.setContentView(objectsIV, blueContentParams).build())
+                .addSubActionView(sabBuilder.setContentView(peopleIV, blueContentParams).build())
+                .addSubActionView(sabBuilder.setContentView(technologyIV, blueContentParams).build())
                 .setRadius(fabActionMenuRadius)
                 .attachTo(fab)
                 .setStartAngle(90)
@@ -155,11 +154,23 @@ class MainPage : AppCompatActivity(), NavigationView.OnNavigationItemSelectedLis
                 animation.start()
             }
         })
+        buildingsIV.setOnClickListener {
+            loadCategoryData(Splash.CATEGORY_BUILDINGS_ID)
+        }
+        foodDrinkIV.setOnClickListener {
+            loadCategoryData(Splash.CATEGORY_BUILDINGS_ID)
+        }
+        natureIV.setOnClickListener { loadCategoryData(Splash.CATEGORY_NATURE_ID) }
+        objectsIV.setOnClickListener { loadCategoryData(Splash.CATEGORY_OBJECTS_ID) }
+        peopleIV.setOnClickListener { loadCategoryData(Splash.CATEGORY_PEOPLE_ID) }
+        technologyIV.setOnClickListener { loadCategoryData(Splash.CATEGORY_TECHNOLOGY_ID) }
+    }
 
-//        fab.setOnClickListener { view ->
-//            Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-//                    .setAction("Action", null).show()
-//        }
+    private fun loadCategoryData(categoryId: Int) {
+        pageIndex = 1
+        splashCategoryId = categoryId
+        circleMenu.close(true)
+        loadData(false)
     }
 
     private fun initSplashListView() {
