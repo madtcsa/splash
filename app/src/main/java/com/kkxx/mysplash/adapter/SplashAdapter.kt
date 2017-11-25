@@ -56,6 +56,10 @@ class SplashAdapter(splashList: List<SplashPhoto>, context: Context) : RecyclerV
         var splashCollect: ImageView = itemView.findViewById(R.id.splashCollect)
         var splashAuthor: TextView = itemView.findViewById(R.id.splashAuthor)
         var splashDate: TextView = itemView.findViewById(R.id.splashDate)
+
+       fun SplashPhoto(){
+           cardView.setOnClickListener {  }
+       }
     }
 
     fun setSplashInfos(splashList: List<SplashPhoto>) {
@@ -70,4 +74,6 @@ class SplashAdapter(splashList: List<SplashPhoto>, context: Context) : RecyclerV
         Log.d("SplashAdapter","-----size----- "+this.splashInfoes.size)
         notifyDataSetChanged()
     }
+
+
 }

@@ -38,19 +38,21 @@ class MainPage : AppCompatActivity(), NavigationView.OnNavigationItemSelectedLis
     private var pageIndex: Int = 1
     private lateinit var fab: FloatingActionButton
     private lateinit var fabIV: ImageView
-    private var splashCategoryId =Splash.illogicalParams
-    private lateinit var circleMenu:FloatingActionMenu
+    private var splashCategoryId = Splash.illogicalParams
+    private lateinit var circleMenu: FloatingActionMenu
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main_page)
         context = this
         initView()
+
         viewModel = ViewModelProviders.of(this).get(SplashViewModel::class.java)
     }
 
     override fun onResume() {
         super.onResume()
         loadData(false)
+
         splashView.addOnScrollListener(object : RecyclerView.OnScrollListener() {
 
             override fun onScrollStateChanged(recyclerView: RecyclerView?, newState: Int) {
@@ -115,6 +117,8 @@ class MainPage : AppCompatActivity(), NavigationView.OnNavigationItemSelectedLis
         val blueParams = FrameLayout.LayoutParams(blueSubActionButtonSize, blueSubActionButtonSize)
         sabBuilder.setLayoutParams(blueParams)
 
+        val allIv = ImageView(this@MainPage)
+        allIv.setImageResource(R.drawable.ic_select_all)
         val buildingsIV = ImageView(this@MainPage)
         buildingsIV.setImageResource(R.drawable.ic_buildings)
         val foodDrinkIV = ImageView(this@MainPage)
@@ -128,7 +132,8 @@ class MainPage : AppCompatActivity(), NavigationView.OnNavigationItemSelectedLis
         val technologyIV = ImageView(this@MainPage)
         technologyIV.setImageResource(R.drawable.ic_technology)
 
-         circleMenu = FloatingActionMenu.Builder(this@MainPage)
+        circleMenu = FloatingActionMenu.Builder(this@MainPage)
+                .addSubActionView(sabBuilder.setContentView(allIv, blueContentParams).build())
                 .addSubActionView(sabBuilder.setContentView(buildingsIV, blueContentParams).build())
                 .addSubActionView(sabBuilder.setContentView(foodDrinkIV, blueContentParams).build())
                 .addSubActionView(sabBuilder.setContentView(natureIV, blueContentParams).build())
@@ -158,12 +163,13 @@ class MainPage : AppCompatActivity(), NavigationView.OnNavigationItemSelectedLis
             loadCategoryData(Splash.CATEGORY_BUILDINGS_ID)
         }
         foodDrinkIV.setOnClickListener {
-            loadCategoryData(Splash.CATEGORY_BUILDINGS_ID)
+            loadCategoryData(Splash.CATEGORY_FOOD_DRINK_ID)
         }
         natureIV.setOnClickListener { loadCategoryData(Splash.CATEGORY_NATURE_ID) }
         objectsIV.setOnClickListener { loadCategoryData(Splash.CATEGORY_OBJECTS_ID) }
         peopleIV.setOnClickListener { loadCategoryData(Splash.CATEGORY_PEOPLE_ID) }
         technologyIV.setOnClickListener { loadCategoryData(Splash.CATEGORY_TECHNOLOGY_ID) }
+        allIv.setOnClickListener { loadCategoryData(Splash.illogicalParams) }
     }
 
     private fun loadCategoryData(categoryId: Int) {
