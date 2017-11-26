@@ -9,7 +9,7 @@ import java.util.*
 
 /**
  * Splash SplashPhoto Api
- * @author chenwei
+ * @author zsmj
  * 2017/11/5
  */
 interface SplashPhotoApi {

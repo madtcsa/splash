@@ -3,4 +3,11 @@
     <color name="colorPrimary">#3F51B5</color>
     <color name="colorPrimaryDark">#303F9F</color>
     <color name="colorAccent">#FF4081</color>
+    <color name="accent">#03A9F4</color>
+
+    <!-- Detail Activity button -->
+    <color name="primary_green">#B2FF59</color>
+    <color name="primary_dark_green">#259B24</color>
+    <color name="accent_green">#8BC34A</color>
+    <color name="unfinished_progress">#AAFFFFFF</color>
 </resources>

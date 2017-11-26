@@ -5,6 +5,8 @@ import android.content.res.Configuration
 import android.content.res.Resources
 import android.graphics.Typeface
 import android.os.Build
+import android.util.TypedValue.COMPLEX_UNIT_DIP
+import android.util.TypedValue.applyDimension
 import android.widget.TextView
 
 /**
@@ -63,6 +65,10 @@ class DisplayUtils(context: Context) {
             return context.resources
                     .configuration
                     .orientation == Configuration.ORIENTATION_LANDSCAPE
+        }
+
+        fun convertDpToPx(context: Context, dp: Float): Int {
+            return applyDimension(COMPLEX_UNIT_DIP, dp, context.resources.displayMetrics).toInt()
         }
     }
 }

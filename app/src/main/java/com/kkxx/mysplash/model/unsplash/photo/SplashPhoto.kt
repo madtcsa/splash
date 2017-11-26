@@ -5,7 +5,7 @@ import com.kkxx.mysplash.model.unsplash.collection.PhotoCollection
 import com.kkxx.mysplash.model.unsplash.user.User
 
 /**
- * author chenwei
+ * author zsmj
  * Date 2017/11/12
  */
 data class SplashPhoto(var id: String, var created_at: String, var updated_at: String, var width: Int,

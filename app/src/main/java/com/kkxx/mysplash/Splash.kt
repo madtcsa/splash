@@ -1,17 +1,23 @@
 package com.kkxx.mysplash
 
 import android.app.Application
+import android.graphics.Bitmap
+import android.graphics.drawable.Drawable
+import android.util.SparseArray
 
 /**
- * @author chenwei
- * 2017/11/5
+ * @author zsmj
+ * @date 2017/11/5
  */
 class Splash : Application() {
 
 
     private var instance: Splash = this@Splash
 
+
     companion object {
+        //cache image for view detail.
+        val detailImg = SparseArray<Drawable>()
         /**
          * Unsplash API
          */

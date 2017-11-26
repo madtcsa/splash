@@ -13,4 +13,8 @@
     <dimen name="blue_sub_action_button_size">40dp</dimen>
     <dimen name="fab_action_menu_radius">96dp</dimen>
 
+    <!-- Detail Activity -->
+    <dimen name="detail_button_end_margin">10dp</dimen>
+    <dimen name="detail_use_button_size">42dp</dimen>
+    <dimen name="detail_download_button_size">32dp</dimen>
 </resources>

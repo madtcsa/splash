@@ -14,7 +14,7 @@ import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 
 /**
- * @author chenwei
+ * @author zsmj
  * 2017/11/4
  */
 class UnSplashWebService {

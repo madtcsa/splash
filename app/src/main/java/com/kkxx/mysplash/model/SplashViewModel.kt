@@ -7,14 +7,14 @@ import com.kkxx.mysplash.model.unsplash.photo.SplashPhoto
 import com.kkxx.mysplash.repository.unsplash.UnSplashWebService
 
 /**
- * @author chenwei
+ * @author zsmj
  * 2017/11/2
  */
 class SplashViewModel : ViewModel() {
 
     private var splashLiveData: LiveData<List<SplashPhoto>>? = null
-    private var webService: UnSplashWebService? = null
 
+    private var webService: UnSplashWebService? = null
 
     fun loadData(pageIndex: Int) {
         if (webService == null) {

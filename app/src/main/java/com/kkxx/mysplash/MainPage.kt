@@ -2,11 +2,14 @@ package com.kkxx.mysplash
 
 import android.animation.ObjectAnimator
 import android.animation.PropertyValuesHolder
+import android.app.ActivityOptions
 import android.arch.lifecycle.Observer
 import android.arch.lifecycle.ViewModelProviders
 import android.content.Context
+import android.content.Intent
 import android.os.Bundle
 import android.support.design.widget.NavigationView
+import android.support.v4.app.ActivityOptionsCompat
 import android.support.v4.view.GravityCompat
 import android.support.v7.app.ActionBarDrawerToggle
 import android.support.v7.app.AppCompatActivity
@@ -20,6 +23,7 @@ import android.widget.ImageView
 import com.bumptech.glide.Glide
 import com.jcodecraeer.xrecyclerview.ProgressStyle
 import com.jcodecraeer.xrecyclerview.XRecyclerView
+import com.kkxx.mysplash.adapter.ClickViewDetail
 import com.kkxx.mysplash.adapter.SplashAdapter
 import com.kkxx.mysplash.model.SplashViewModel
 import com.kkxx.mysplash.model.unsplash.photo.SplashPhoto
@@ -29,7 +33,7 @@ import com.oguzdev.circularfloatingactionmenu.library.SubActionButton
 import kotlinx.android.synthetic.main.activity_main_page.*
 import kotlinx.android.synthetic.main.app_bar_main_page.*
 
-class MainPage : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener {
+class MainPage : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener, ClickViewDetail {
 
     private lateinit var viewModel: SplashViewModel
     private var splashAdapter: SplashAdapter? = null
@@ -69,7 +73,7 @@ class MainPage : AppCompatActivity(), NavigationView.OnNavigationItemSelectedLis
         viewModel.getSplashList(pageIndex, splashCategoryId)!!.observe(this@MainPage,
                 Observer<List<SplashPhoto>> { t: List<SplashPhoto>? ->
                     if (splashAdapter == null) {
-                        splashAdapter = SplashAdapter(t!!, context)
+                        splashAdapter = SplashAdapter(t!!, context, this@MainPage)
                         splashView.adapter = splashAdapter
                     } else {
                         if (isMore) {
@@ -217,9 +221,9 @@ class MainPage : AppCompatActivity(), NavigationView.OnNavigationItemSelectedLis
         // Handle action bar item clicks here. The action bar will
         // automatically handle clicks on the Home/Up button, so long
         // as you specify a parent activity in AndroidManifest.xml.
-        when (item.itemId) {
-            R.id.action_settings -> return true
-            else -> return super.onOptionsItemSelected(item)
+        return when (item.itemId) {
+            R.id.action_settings -> true
+            else -> super.onOptionsItemSelected(item)
         }
     }
 
@@ -248,5 +252,18 @@ class MainPage : AppCompatActivity(), NavigationView.OnNavigationItemSelectedLis
 
         drawer_layout.closeDrawer(GravityCompat.START)
         return true
+    }
+
+    override fun clickToDetail(position: Int, target: ImageView, photo: SplashPhoto) {
+        Splash.detailImg.put(position, target.drawable)
+        val intent = Intent(this@MainPage, DetailActivity::class.java)
+        intent.putExtra("click_index", position)
+        intent.putExtra("img_url", photo.urls.regular)
+        intent.putExtra("img_width",photo.width)
+        intent.putExtra("img_height",photo.height)
+        intent.putExtra("bg_color",photo.color)
+        val options = ActivityOptionsCompat.makeSceneTransitionAnimation(this@MainPage,
+                target, "viewDetail")
+        startActivity(intent, options.toBundle())
     }
 }

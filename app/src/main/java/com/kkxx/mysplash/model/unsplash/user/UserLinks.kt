@@ -1,7 +1,7 @@
 package com.kkxx.mysplash.model.unsplash.user
 
 /**
- * author chenwei
+ * author zsmj
  * Date 2017/11/12
  */
 data class UserLinks(var self: String, var html: String, var photos: String, var likes: String,

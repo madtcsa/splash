@@ -6,7 +6,7 @@ import android.text.TextUtils
 import java.util.regex.Pattern
 
 /**
- * author chenwei
+ * author zsmj
  * Date 2017/11/12
  */
 class ImageHelper {

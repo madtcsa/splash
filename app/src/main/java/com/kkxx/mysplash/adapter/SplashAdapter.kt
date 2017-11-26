@@ -1,6 +1,8 @@
 package com.kkxx.mysplash.adapter
 
+import android.app.ActivityOptions
 import android.content.Context
+import android.graphics.Bitmap
 import android.support.v7.widget.CardView
 import android.support.v7.widget.RecyclerView
 import android.util.Log
@@ -11,19 +13,22 @@ import android.widget.ImageView
 import android.widget.TextView
 import com.bumptech.glide.Glide
 import com.kkxx.mysplash.R
+import com.kkxx.mysplash.Splash
 import com.kkxx.mysplash.model.unsplash.photo.SplashPhoto
 import com.kkxx.mysplash.utils.ImageHelper
 import com.kkxx.mysplash.view.FreedomImageView
 import java.util.*
 
 /**
- * @author chenwei
+ * @author zsmj
  * 2017/11/3
  */
-class SplashAdapter(splashList: List<SplashPhoto>, context: Context) : RecyclerView.Adapter<SplashAdapter.SplashHolder>() {
+class SplashAdapter(splashList: List<SplashPhoto>, context: Context, listener: ClickViewDetail) : RecyclerView
+.Adapter<SplashAdapter.SplashHolder>() {
 
     var splashInfoes: List<SplashPhoto> = splashList
     var context: Context = context
+    var clickListener: ClickViewDetail = listener
 
     override fun getItemCount(): Int {
         return splashInfoes.size
@@ -43,6 +48,9 @@ class SplashAdapter(splashList: List<SplashPhoto>, context: Context) : RecyclerV
         } else {
             holder.splashCollect.setBackgroundResource(android.R.drawable.star_big_off)
         }
+        holder.cardView.setOnClickListener {
+            clickListener.clickToDetail(position, holder.splashPreImage,splashPhoto)
+        }
     }
 
     override fun onCreateViewHolder(parent: ViewGroup?, viewType: Int): SplashHolder {
@@ -56,10 +64,6 @@ class SplashAdapter(splashList: List<SplashPhoto>, context: Context) : RecyclerV
         var splashCollect: ImageView = itemView.findViewById(R.id.splashCollect)
         var splashAuthor: TextView = itemView.findViewById(R.id.splashAuthor)
         var splashDate: TextView = itemView.findViewById(R.id.splashDate)
-
-       fun SplashPhoto(){
-           cardView.setOnClickListener {  }
-       }
     }
 
     fun setSplashInfos(splashList: List<SplashPhoto>) {
@@ -68,10 +72,10 @@ class SplashAdapter(splashList: List<SplashPhoto>, context: Context) : RecyclerV
     }
 
     fun appendSplashInfos(splashList: List<SplashPhoto>) {
-        if(this.splashInfoes is ArrayList) {
+        if (this.splashInfoes is ArrayList) {
             (this.splashInfoes as ArrayList<SplashPhoto>).addAll(splashList)
         }
-        Log.d("SplashAdapter","-----size----- "+this.splashInfoes.size)
+        Log.d("SplashAdapter", "-----size----- " + this.splashInfoes.size)
         notifyDataSetChanged()
     }
 

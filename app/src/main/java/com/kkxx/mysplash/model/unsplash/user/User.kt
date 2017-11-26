@@ -1,7 +1,7 @@
 package com.kkxx.mysplash.model.unsplash.user
 
 /**
- * author chenwei
+ * author zsmj
  * Date 2017/11/11
  */
 data class User(var id:String, var updated_at:String, var username:String, var name:String,

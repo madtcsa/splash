@@ -11,7 +11,7 @@ import okhttp3.Response
  * A interceptor for {@link retrofit2.Retrofit}, it can add authorization information into the
  * HTTP request header.
  *
- * @author chenwei
+ * @author zsmj
  * 2017/11/5
  */
 class SplashAuthInterceptor : Interceptor {
