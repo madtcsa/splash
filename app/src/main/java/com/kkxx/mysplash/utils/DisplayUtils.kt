@@ -7,6 +7,8 @@ import android.graphics.Typeface
 import android.os.Build
 import android.util.TypedValue.COMPLEX_UNIT_DIP
 import android.util.TypedValue.applyDimension
+import android.view.View
+import android.view.ViewPropertyAnimator
 import android.widget.TextView
 
 /**
@@ -31,7 +33,7 @@ class DisplayUtils(context: Context) {
     }
 
     companion object {
-
+        private val DEFAULT_DELAY: Long = 0
         fun getStatusBarHeight(r: Resources): Int {
             var result = 0
             val resourceId = r.getIdentifier("status_bar_height", "dimen", "android")
@@ -69,6 +71,34 @@ class DisplayUtils(context: Context) {
 
         fun convertDpToPx(context: Context, dp: Float): Int {
             return applyDimension(COMPLEX_UNIT_DIP, dp, context.resources.displayMetrics).toInt()
+        }
+
+        fun convertPxToDp(context: Context, dp: Float): Float {
+            return dp * context.resources.displayMetrics.density
+        }
+        fun configuredHideYView(v: View) {
+            v.scaleY = 0f
+            v.pivotY = 0f
+        }
+
+        fun showViewByScale(v: View): ViewPropertyAnimator {
+
+            return v.animate().setStartDelay(DEFAULT_DELAY)
+                    .scaleX(1f).scaleY(1f)
+        }
+
+        fun hideViewByScaleXY(v: View): ViewPropertyAnimator {
+            return hideViewByScale(v, DEFAULT_DELAY, 0, 0)
+        }
+
+        fun hideViewByScaleY(v: View): ViewPropertyAnimator {
+            return hideViewByScale(v, DEFAULT_DELAY, 1, 0)
+        }
+
+        private fun hideViewByScale(v: View, delay: Long, x: Int, y: Int): ViewPropertyAnimator {
+
+            return v.animate().setStartDelay(delay.toLong())
+                    .scaleX(x.toFloat()).scaleY(y.toFloat())
         }
     }
 }

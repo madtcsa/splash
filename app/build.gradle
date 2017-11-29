@@ -56,4 +56,10 @@ dependencies {
     //下拉刷新、上拉加载
     compile 'com.jcodecraeer:xrecyclerview:1.3.2'
     implementation project(':circlemeunlibrary')
+    compile 'com.github.lzyzsd:circleprogress:1.2.1'
+    compile 'com.koushikdutta.ion:ion:2.1.7'
+
+    compile 'com.mikepenz:iconics-core:2.9.5@aar'
+    compile 'com.mikepenz:fontawesome-typeface:4.6.0.1@aar'
+
 }
