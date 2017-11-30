@@ -10,4 +10,5 @@
     <color name="primary_dark_green">#259B24</color>
     <color name="accent_green">#8BC34A</color>
     <color name="unfinished_progress">#AAFFFFFF</color>
+    <color name="transparent">#00000000</color>
 </resources>

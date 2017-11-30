@@ -1,123 +1,129 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
-    android:id="@+id/sv"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#66000000">
+    android:background="#AA000000"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
-    <android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:app="http://schemas.android.com/apk/res-auto"
+    <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+        android:id="@+id/sv"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_gravity="center">
+        android:layout_gravity="center_vertical">
 
-        <com.kkxx.mysplash.view.FreedomImageView
-            android:id="@+id/imgDetail"
-            android:layout_width="0dp"
+        <android.support.constraint.ConstraintLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:scaleType="centerCrop"
-            android:transitionName="viewDetail"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            android:layout_gravity="center">
 
-        <FrameLayout
-            android:id="@+id/detailContainerLayout"
-            android:layout_width="0dp"
-            android:layout_height="128dp"
-            android:background="#00FFFFFF"
-            app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/imgDetail">
-
-            <RelativeLayout
-                android:id="@+id/detailTitles"
-                android:layout_width="wrap_content"
+            <com.kkxx.mysplash.view.FreedomImageView
+                android:id="@+id/imgDetail"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_gravity="center_vertical"
-                android:layout_marginEnd="72dp"
-                android:layout_marginStart="48dp"
-                android:visibility="invisible">
+                android:scaleType="centerCrop"
+                android:transitionName="viewDetail" />
 
-                <TextView
-                    android:id="@+id/detailAuthor"
+            <FrameLayout
+                android:id="@+id/detailContainerLayout"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/imgDetail"
+                android:layout_width="0dp"
+                android:layout_height="128dp"
+                android:background="#00FFFFFF">
+
+                <RelativeLayout
+                    android:id="@+id/detailTitles"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:ellipsize="end"
-                    android:fontFamily="sans-serif-medium"
-                    android:maxLines="2"
-                    android:textColor="#FFF"
-                    android:textSize="24sp" />
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginEnd="72dp"
+                    android:layout_marginStart="48dp"
+                    android:visibility="invisible">
 
-                <TextView
-                    android:id="@+id/detailDate"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_below="@id/detailAuthor"
-                    android:layout_marginTop="8dp"
-                    android:ellipsize="end"
-                    android:fontFamily="sans-serif-medium"
-                    android:maxLines="1"
-                    android:text=""
-                    android:textColor="#FFF" />
+                    <TextView
+                        android:id="@+id/detailAuthor"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:ellipsize="end"
+                        android:fontFamily="sans-serif-medium"
+                        android:maxLines="2"
+                        android:textColor="#FFF"
+                        android:textSize="24sp" />
 
-            </RelativeLayout>
-        </FrameLayout>
+                    <TextView
+                        android:id="@+id/detailDate"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@id/detailAuthor"
+                        android:layout_marginTop="8dp"
+                        android:ellipsize="end"
+                        android:fontFamily="sans-serif-medium"
+                        android:maxLines="1"
+                        android:text=""
+                        android:textColor="#FFF" />
 
-        <ImageButton
-            android:id="@+id/imgShare"
-            android:layout_width="@dimen/detail_download_button_size"
-            android:layout_height="@dimen/detail_download_button_size"
-            android:background="@drawable/animated_ripple"
-            android:elevation="3dp"
-            android:src="@drawable/ic_share"
-            android:stateListAnimator="@animator/fab_animation"
-            android:transitionName="fab"
-            app:layout_constraintBottom_toBottomOf="@id/imgUse"
-            app:layout_constraintLeft_toLeftOf="@id/imgUse"
-            app:layout_constraintRight_toRightOf="@id/imgUse"
-            app:layout_constraintTop_toTopOf="@id/imgUse" />
+                </RelativeLayout>
+            </FrameLayout>
 
-        <ImageButton
-            android:id="@+id/imgDownload"
-            android:layout_width="@dimen/detail_download_button_size"
-            android:layout_height="@dimen/detail_download_button_size"
-            android:background="@drawable/animated_ripple"
-            android:elevation="3dp"
-            android:src="@drawable/ic_download"
-            android:stateListAnimator="@animator/fab_animation"
-            android:transitionName="fab"
-            app:layout_constraintBottom_toBottomOf="@id/imgUse"
-            app:layout_constraintLeft_toLeftOf="@id/imgUse"
-            app:layout_constraintRight_toRightOf="@id/imgUse"
-            app:layout_constraintTop_toTopOf="@id/imgUse" />
+            <ImageButton
+                android:id="@+id/imgShare"
+                app:layout_constraintBottom_toBottomOf="@id/imgUse"
+                app:layout_constraintLeft_toLeftOf="@id/imgUse"
+                app:layout_constraintRight_toRightOf="@id/imgUse"
+                app:layout_constraintTop_toTopOf="@id/imgUse"
+                android:layout_width="@dimen/detail_download_button_size"
+                android:layout_height="@dimen/detail_download_button_size"
+                android:background="@drawable/animated_ripple"
+                android:elevation="3dp"
+                android:src="@drawable/ic_share"
+                android:stateListAnimator="@animator/fab_animation"
+                android:transitionName="fab" />
 
-        <com.github.lzyzsd.circleprogress.DonutProgress
-            android:id="@+id/activity_detail_progress"
-            android:layout_width="53dp"
-            android:layout_height="53dp"
-            android:elevation="4dp"
-            app:donut_finished_color="@color/accent_green"
-            app:donut_progress="1"
-            app:donut_unfinished_color="@color/unfinished_progress"
-            app:layout_constraintBottom_toBottomOf="@id/imgUse"
-            app:layout_constraintLeft_toLeftOf="@id/imgUse"
-            app:layout_constraintRight_toRightOf="@id/imgUse"
-            app:layout_constraintTop_toTopOf="@id/imgUse" />
+            <ImageButton
+                android:id="@+id/imgDownload"
+                app:layout_constraintBottom_toBottomOf="@id/imgUse"
+                app:layout_constraintLeft_toLeftOf="@id/imgUse"
+                app:layout_constraintRight_toRightOf="@id/imgUse"
+                app:layout_constraintTop_toTopOf="@id/imgUse"
+                android:layout_width="@dimen/detail_download_button_size"
+                android:layout_height="@dimen/detail_download_button_size"
+                android:background="@drawable/animated_ripple"
+                android:elevation="3dp"
+                android:src="@drawable/ic_download"
+                android:stateListAnimator="@animator/fab_animation"
+                android:transitionName="fab" />
 
-        <ImageButton
-            android:id="@+id/imgUse"
-            android:layout_width="@dimen/detail_use_button_size"
-            android:layout_height="@dimen/detail_use_button_size"
-            android:layout_marginEnd="@dimen/detail_button_end_margin"
-            android:background="@drawable/animated_ripple"
-            android:elevation="4dp"
-            android:src="@drawable/ic_wallpaper"
-            android:stateListAnimator="@animator/fab_animation"
-            android:transitionName="fab"
-            app:layout_constraintBottom_toBottomOf="@id/imgDetail"
-            app:layout_constraintRight_toRightOf="@id/imgDetail"
-            app:layout_constraintTop_toBottomOf="@+id/imgDetail" />
-    </android.support.constraint.ConstraintLayout>
-</ScrollView>
+            <com.github.lzyzsd.circleprogress.DonutProgress
+                android:id="@+id/activity_detail_progress"
+                app:donut_finished_color="@color/accent_green"
+                app:donut_progress="1"
+                app:donut_unfinished_color="@color/unfinished_progress"
+                app:layout_constraintBottom_toBottomOf="@id/imgUse"
+                app:layout_constraintLeft_toLeftOf="@id/imgUse"
+                app:layout_constraintRight_toRightOf="@id/imgUse"
+                app:layout_constraintTop_toTopOf="@id/imgUse"
+                android:layout_width="53dp"
+                android:layout_height="53dp"
+                android:elevation="4dp" />
+
+            <ImageButton
+                android:id="@+id/imgUse"
+                app:layout_constraintBottom_toBottomOf="@id/imgDetail"
+                app:layout_constraintRight_toRightOf="@id/imgDetail"
+                app:layout_constraintTop_toBottomOf="@+id/imgDetail"
+                android:layout_width="@dimen/detail_use_button_size"
+                android:layout_height="@dimen/detail_use_button_size"
+                android:layout_marginEnd="@dimen/detail_button_end_margin"
+                android:background="@drawable/animated_ripple"
+                android:elevation="4dp"
+                android:src="@drawable/ic_wallpaper"
+                android:stateListAnimator="@animator/fab_animation"
+                android:transitionName="fab" />
+        </android.support.constraint.ConstraintLayout>
+    </ScrollView>
+</RelativeLayout>
