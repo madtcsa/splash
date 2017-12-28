@@ -18,9 +18,11 @@ import android.support.v7.widget.StaggeredGridLayoutManager
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
+import android.view.WindowManager
 import android.widget.FrameLayout
 import android.widget.ImageView
 import com.bumptech.glide.Glide
+import com.jaeger.library.StatusBarUtil
 import com.jcodecraeer.xrecyclerview.ProgressStyle
 import com.jcodecraeer.xrecyclerview.XRecyclerView
 import com.kkxx.mysplash.adapter.ClickViewDetail
@@ -33,7 +35,7 @@ import com.oguzdev.circularfloatingactionmenu.library.SubActionButton
 import kotlinx.android.synthetic.main.activity_main_page.*
 import kotlinx.android.synthetic.main.app_bar_main_page.*
 
-class MainPage : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener, ClickViewDetail {
+class MainPage : AppCompatActivity(), ClickViewDetail {
 
     private lateinit var viewModel: SplashViewModel
     private var splashAdapter: SplashAdapter? = null
@@ -44,19 +46,21 @@ class MainPage : AppCompatActivity(), NavigationView.OnNavigationItemSelectedLis
     private lateinit var fabIV: ImageView
     private var splashCategoryId = Splash.illogicalParams
     private lateinit var circleMenu: FloatingActionMenu
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main_page)
+        setContentView(R.layout.content_main_page)
+        val localLayoutParams = window.attributes
+        localLayoutParams.flags = (WindowManager.LayoutParams
+                .FLAG_TRANSLUCENT_STATUS or localLayoutParams.flags)
         context = this
         initView()
-
         viewModel = ViewModelProviders.of(this).get(SplashViewModel::class.java)
     }
 
     override fun onResume() {
         super.onResume()
         loadData(false)
-
         splashView.addOnScrollListener(object : RecyclerView.OnScrollListener() {
 
             override fun onScrollStateChanged(recyclerView: RecyclerView?, newState: Int) {
@@ -88,12 +92,6 @@ class MainPage : AppCompatActivity(), NavigationView.OnNavigationItemSelectedLis
     }
 
     private fun initView() {
-        setSupportActionBar(toolbar)
-        val toggle = ActionBarDrawerToggle(
-                this@MainPage, drawer_layout, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close)
-        drawer_layout.addDrawerListener(toggle)
-        toggle.syncState()
-        nav_view.setNavigationItemSelectedListener(this@MainPage)
         initSplashListView()
         initCircleMenu()
     }
@@ -211,49 +209,6 @@ class MainPage : AppCompatActivity(), NavigationView.OnNavigationItemSelectedLis
         }
     }
 
-    override fun onCreateOptionsMenu(menu: Menu): Boolean {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        menuInflater.inflate(R.menu.main_page, menu)
-        return true
-    }
-
-    override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
-        return when (item.itemId) {
-            R.id.action_settings -> true
-            else -> super.onOptionsItemSelected(item)
-        }
-    }
-
-    override fun onNavigationItemSelected(item: MenuItem): Boolean {
-        // Handle navigation view item clicks here.
-        when (item.itemId) {
-            R.id.nav_camera -> {
-                // Handle the camera action
-            }
-            R.id.nav_gallery -> {
-
-            }
-            R.id.nav_slideshow -> {
-
-            }
-            R.id.nav_manage -> {
-
-            }
-            R.id.nav_share -> {
-
-            }
-            R.id.nav_send -> {
-
-            }
-        }
-
-        drawer_layout.closeDrawer(GravityCompat.START)
-        return true
-    }
-
     override fun clickToDetail(position: Int, target: ImageView, photo: SplashPhoto) {
         Splash.detailImg.put(position, target.drawable)
         val intent = Intent(this@MainPage, DetailActivity::class.java)
@@ -264,7 +219,7 @@ class MainPage : AppCompatActivity(), NavigationView.OnNavigationItemSelectedLis
         intent.putExtra("bg_color", photo.color)
         intent.putExtra("img_author", photo.user.name)
         intent.putExtra("img_date", photo.created_at)
-        intent.putExtra("img_down_url",photo.urls.raw)
+        intent.putExtra("img_down_url", photo.urls.raw)
         val options = ActivityOptionsCompat.makeSceneTransitionAnimation(this@MainPage,
                 target, "viewDetail")
         startActivity(intent, options.toBundle())

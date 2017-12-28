@@ -281,7 +281,7 @@ class DetailActivity : AppCompatActivity() {
                     .load(downloadUrl)
                     .progressHandler(progressCallback)
                     .asInputStream()
-
+            Log.d("DetailActivity", "---download url----- " + downloadUrl);
             animateStart()
 
             useImgBtn.animate().rotation(360f).setDuration(ANIMATION_DURATION_LONG.toLong()).setListener(object : CustomAnimatorListener() {
@@ -367,7 +367,7 @@ class DetailActivity : AppCompatActivity() {
                         SplashUtils.copyInputStreamToFile(result.result, file)
 
                         //get the contentUri for this file and start the intent
-                        val contentUri = FileProvider.getUriForFile(this@DetailActivity, "com.mikepenz.fileprovider", file)
+                        val contentUri = FileProvider.getUriForFile(this@DetailActivity, "com.kkxx.fileprovider", file)
 
                         if (set) {
                             //get crop intent
@@ -387,6 +387,7 @@ class DetailActivity : AppCompatActivity() {
                         success = true
                     } catch (ex: Exception) {
                         Log.e("un:splash", ex.toString())
+                        ex.printStackTrace()
                     }
 
                     //animate after complete
