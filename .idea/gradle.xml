@@ -10,6 +10,7 @@
             <option value="$PROJECT_DIR$" />
             <option value="$PROJECT_DIR$/app" />
             <option value="$PROJECT_DIR$/circlemeunlibrary" />
+            <option value="$PROJECT_DIR$/satellitemenulib" />
           </set>
         </option>
         <option name="resolveModulePerSourceSet" value="false" />

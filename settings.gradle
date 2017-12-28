@@ -1,1 +1,1 @@
-include ':app', ':circlemeunlibrary'
+include ':app', ':circlemeunlibrary',':satellitemenulib'
